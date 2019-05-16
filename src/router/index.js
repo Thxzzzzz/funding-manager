@@ -12,6 +12,9 @@ import util from '@/libs/util.js'
 // 路由数据
 import routes from './routes'
 import { Info } from '@api/user'
+// import { adminRoutes } from '@/router/routes'
+import { managerHeader, auditorHeader } from '@/menu/header'
+import { managerAside, auditorAside } from '@/menu/aside'
 
 Vue.use(VueRouter)
 
@@ -37,7 +40,24 @@ router.beforeEach((to, from, next) => {
     Info()
       .then(async res => {
         res.name = res.nickname
-        store.commit('d2admin/user/set', res, { root: true })
+        await store.dispatch('d2admin/user/set', res, { root: true })
+
+        if (res.role_id === 999) {
+          // 设置顶栏菜单
+          store.commit('d2admin/menu/headerSet', managerHeader)
+          // 设置侧边栏菜单
+          store.commit('d2admin/menu/asideSet', managerAside)
+          // 初始化菜单搜索功能
+          store.commit('d2admin/search/init', managerHeader)
+        } else if (res.role_id === 1) {
+          // 设置顶栏菜单
+          store.commit('d2admin/menu/headerSet', auditorHeader)
+          // 设置侧边栏菜单
+          store.commit('d2admin/menu/asideSet', auditorAside)
+          // 初始化菜单搜索功能
+          store.commit('d2admin/search/init', auditorHeader)
+        }
+
         next()
       })
       .catch(err => {
@@ -52,21 +72,6 @@ router.beforeEach((to, from, next) => {
         })
         NProgress.done()
       })
-
-    // const token = util.cookies.get('token')
-    // if (token && token !== 'undefined') {
-    //   next()
-    // } else {
-    //   // 没有登录的时候跳转到登录界面
-    //   // 携带上登陆成功之后需要跳转的页面完整路径
-    //   next({
-    //     name: 'login',
-    //     query: {
-    //       redirect: to.fullPath
-    //     }
-    //   })
-    //   NProgress.done()
-    // }
   } else {
     // 不需要身份校验 直接通过
     next()

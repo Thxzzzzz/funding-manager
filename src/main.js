@@ -22,6 +22,7 @@ new Vue({
   store,
   i18n,
   render: h => h(App),
+
   created () {
     // 处理路由 得到每一级的路由设置
     this.$store.commit('d2admin/page/init', frameInRoutes)

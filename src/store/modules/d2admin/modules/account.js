@@ -2,6 +2,8 @@ import { Message, MessageBox } from 'element-ui'
 import util from '@/libs/util.js'
 import router from '@/router'
 import { Login, Logout } from '@api/user'
+// import { adminRoutes } from '@/router/routes'
+// import store from '@/store/index'
 
 export default {
   namespaced: true,
@@ -24,9 +26,16 @@ export default {
           password
         })
           .then(async res => {
+            // 管理员
+            // if (res.role_id === 999) {
+            //   // console.log(999)
+            //   store.commit('d2admin/page/init', adminRoutes)
+            // } else if (res.role_id === 1) {
+            //   // store.commit('d2admin/page/init', adminRoutes)
+            // }
             // 设置 vuex 用户信息
             res.name = res.nickname
-            await dispatch('d2admin/user/set', res, { root: true })
+            await dispatch('d2admin/user/set', { name: res.nickname }, { root: true })
             // 用户登录后从持久化数据加载一系列的设置
             await dispatch('load')
             // 结束
