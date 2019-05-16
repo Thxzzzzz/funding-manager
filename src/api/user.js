@@ -10,7 +10,7 @@ export function Login (data) {
 
 export function Info (data) {
   return request({
-    url: 'v1/user/info',
+    url: 'manager/user/info',
     method: 'get',
     data
   })
@@ -18,7 +18,7 @@ export function Info (data) {
 
 export function Logout (data) {
   return request({
-    url: 'v1/user/logout',
+    url: 'manager/user/logout',
     method: 'post',
     data
   })
