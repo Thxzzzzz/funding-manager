@@ -59,6 +59,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     // dataAxios 是 axios 返回数据中的 data
+    // console.log(response)
     const dataAxios = response.data
     // 这个状态码是和后端约定的
     const { code } = dataAxios
@@ -69,7 +70,7 @@ service.interceptors.response.use(
     } else {
       // 有 code 代表这是一个后端接口 可以进行进一步的判断
       switch (code) {
-        case 0:
+        case 200:
           // [ 示例 ] code === 0 代表没有错误
           return dataAxios.data
         case 'xxx':
@@ -78,7 +79,7 @@ service.interceptors.response.use(
           break
         default:
           // 不是正确的 code
-          errorCreate(`${dataAxios.msg}: ${response.config.url}`)
+          errorCreate(`${dataAxios.message}: ${response.config.url}`)
           break
       }
     }

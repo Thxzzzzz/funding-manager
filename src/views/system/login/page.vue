@@ -16,7 +16,7 @@
         flex="dir:top main:justify cross:center box:justify">
         <div class="page-login--content-header">
           <p class="page-login--content-header-motto">
-            时间是一切财富中最宝贵的财富。 <span>—— 德奥弗拉斯多</span>
+            1500310307 <span>韦谷叶</span>
           </p>
         </div>
         <div
@@ -38,37 +38,38 @@
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
-                <el-form-item prop="code">
+                <!-- <el-form-item prop="code">
                   <el-input type="text" v-model="formLogin.code" placeholder="- - - -">
                     <template slot="prepend">验证码</template>
                     <template slot="append">
                       <img class="login-code" src="./image/login-code.png">
                     </template>
                   </el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-button size="default" @click="submit" type="primary" class="button-login">登录</el-button>
               </el-form>
             </el-card>
             <p
               class="page-login--options"
               flex="main:justify cross:center">
-              <span><d2-icon name="question-circle"/> 忘记密码</span>
-              <span>注册用户</span>
+              <!-- <span><d2-icon name="question-circle"/> 忘记密码</span>
+              <span>注册用户</span> -->
             </p>
             <!-- 快速登录按钮 -->
             <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
-              快速选择用户（测试功能）
+              快速选择用户（方便测试用）
             </el-button>
           </div>
         </div>
         <div class="page-login--content-footer">
-          <p class="page-login--content-footer-options">
+          <!-- <p class="page-login--content-footer-options">
             <a href="#">帮助</a>
             <a href="#">隐私</a>
             <a href="#">条款</a>
-          </p>
+          </p> -->
           <p class="page-login--content-footer-copyright">
-            Copyright <d2-icon name="copyright"/> 2018 D2 Projects 开源组织出品 <a href="https://github.com/FairyEver">@FairyEver</a>
+            Copyright <d2-icon name="copyright"></d2-icon>
+            1500310307 韦谷叶
           </p>
         </div>
       </div>
@@ -78,7 +79,7 @@
       :visible.sync="dialogVisible"
       width="400px">
       <el-row :gutter="10" style="margin: -20px 0px -10px 0px;">
-        <el-col v-for="(user, index) in users" :key="index" :span="8">
+        <el-col v-for="(user, index) in users" :key="index" :span="12">
           <div class="page-login--quick-user" @click="handleUserBtnClick(user)">
             <d2-icon name="user-circle-o"/>
             <span>{{user.name}}</span>
@@ -103,24 +104,19 @@ export default {
         {
           name: '管理员',
           username: 'admin',
-          password: 'admin'
+          password: '123456'
         },
         {
-          name: '编辑',
-          username: 'editor',
-          password: 'editor'
-        },
-        {
-          name: '用户1',
-          username: 'user1',
-          password: 'user1'
+          name: '审核员',
+          username: 'shenhe1',
+          password: '123456'
         }
       ],
       // 表单
       formLogin: {
-        username: 'admin',
-        password: 'admin',
-        code: 'v9am'
+        username: '',
+        password: ''
+        // code: 'v9am'
       },
       // 校验
       rules: {

@@ -11,6 +11,7 @@ import util from '@/libs/util.js'
 
 // 路由数据
 import routes from './routes'
+import { Info } from '@api/user'
 
 Vue.use(VueRouter)
 
@@ -32,21 +33,40 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(r => r.meta.auth)) {
     // 这里暂时将cookie里是否存有token作为验证是否登录的条件
     // 请根据自身业务需要修改
-    const token = util.cookies.get('token')
-    if (token && token !== 'undefined') {
-      next()
-    } else {
-      // 没有登录的时候跳转到登录界面
-      // 携带上登陆成功之后需要跳转的页面完整路径
-      next({
-        name: 'login',
-        query: {
-          redirect: to.fullPath
-        }
+
+    Info()
+      .then(async res => {
+        res.name = res.nickname
+        store.commit('d2admin/user/set', res, { root: true })
+        next()
       })
-      // https://github.com/d2-projects/d2-admin/issues/138
-      NProgress.done()
-    }
+      .catch(err => {
+        console.log('err: ', err)
+        // 没有登录的时候跳转到登录界面
+        // 携带上登陆成功之后需要跳转的页面完整路径
+        next({
+          name: 'login',
+          query: {
+            redirect: to.fullPath
+          }
+        })
+        NProgress.done()
+      })
+
+    // const token = util.cookies.get('token')
+    // if (token && token !== 'undefined') {
+    //   next()
+    // } else {
+    //   // 没有登录的时候跳转到登录界面
+    //   // 携带上登陆成功之后需要跳转的页面完整路径
+    //   next({
+    //     name: 'login',
+    //     query: {
+    //       redirect: to.fullPath
+    //     }
+    //   })
+    //   NProgress.done()
+    // }
   } else {
     // 不需要身份校验 直接通过
     next()
