@@ -12,7 +12,23 @@ export function Info (data) {
   return request({
     url: 'manager/user/info',
     method: 'get',
-    data
+    params: {
+      ...data
+    }
+  })
+}
+
+/**
+ * 根据 ID 来获取用户信息
+ * @param {*} data
+ */
+export function GetUserById (data) {
+  return request({
+    url: 'v1/user/getInfoById',
+    method: 'get',
+    params: {
+      ...data
+    }
   })
 }
 

@@ -188,6 +188,7 @@ export default {
             password: this.formLogin.password
           })
             .then(() => {
+              // 登陆后关闭所有上次打开的页面，由于不知道它从哪里加载的，只能先这么做了
               this.$store.dispatch('d2admin/page/closeAll')
               // 重定向对象不存在则返回顶层路径
               this.$router.replace(this.$route.query.redirect || '/')

@@ -8,7 +8,22 @@ export function GetLicenseByVerifyStatus (data) {
   return request({
     url: 'manager/license/getByVerifyStatus',
     method: 'get',
-    params: { ...data }
+    params: {
+      ...data
+    }
+  })
+}
+
+/**
+ * 根据 ID 获取产品信息
+ */
+export function licenseById (data) {
+  return request({
+    url: 'manager/license/licenseById',
+    method: 'get',
+    params: {
+      ...data
+    }
   })
 }
 
