@@ -42,6 +42,8 @@ export default {
             //   // store.commit('d2admin/page/init', adminRoutes)
             // }
             // 设置 vuex 用户信息
+            util.cookies.set('uuid', res.id)
+            // util.cookies.set('token', res.id)
             res.name = res.nickname
             await dispatch('d2admin/user/set', {
               name: res.nickname

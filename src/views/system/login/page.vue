@@ -2,40 +2,49 @@
   <div class="page-login">
     <div class="page-login--layer page-login--layer-area">
       <ul class="circles">
-        <li v-for="n in 10" :key="n"></li>
+        <li v-for="n in 10"
+            :key="n"></li>
       </ul>
     </div>
-    <div
-      class="page-login--layer page-login--layer-time"
-      flex="main:center cross:center">
+    <div class="page-login--layer page-login--layer-time"
+         flex="main:center cross:center">
       {{time}}
     </div>
     <div class="page-login--layer">
-      <div
-        class="page-login--content"
-        flex="dir:top main:justify cross:center box:justify">
+      <div class="page-login--content"
+           flex="dir:top main:justify cross:center box:justify">
         <div class="page-login--content-header">
           <p class="page-login--content-header-motto">
             1500310307 <span>韦谷叶</span>
           </p>
         </div>
-        <div
-          class="page-login--content-main"
-          flex="dir:top main:center cross:center">
+        <div class="page-login--content-main"
+             flex="dir:top main:center cross:center">
           <!-- logo -->
-          <img class="page-login--logo" src="./image/logo@2x.png">
+          <img class="page-login--logo"
+               src="./image/logo@2x.png">
           <!-- 表单 -->
           <div class="page-login--form">
             <el-card shadow="never">
-              <el-form ref="loginForm" label-position="top" :rules="rules" :model="formLogin" size="default">
+              <el-form ref="loginForm"
+                       label-position="top"
+                       :rules="rules"
+                       :model="formLogin"
+                       size="default">
                 <el-form-item prop="username">
-                  <el-input type="text" v-model="formLogin.username" placeholder="用户名">
-                    <i slot="prepend" class="fa fa-user-circle-o"></i>
+                  <el-input type="text"
+                            v-model="formLogin.username"
+                            placeholder="用户名">
+                    <i slot="prepend"
+                       class="fa fa-user-circle-o"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                  <el-input type="password" v-model="formLogin.password" placeholder="密码">
-                    <i slot="prepend" class="fa fa-keyboard-o"></i>
+                  <el-input type="password"
+                            v-model="formLogin.password"
+                            placeholder="密码">
+                    <i slot="prepend"
+                       class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
                 <!-- <el-form-item prop="code">
@@ -46,17 +55,22 @@
                     </template>
                   </el-input>
                 </el-form-item> -->
-                <el-button size="default" @click="submit" type="primary" class="button-login">登录</el-button>
+                <el-button size="default"
+                           @click="submit"
+                           type="primary"
+                           class="button-login">登录</el-button>
               </el-form>
             </el-card>
-            <p
-              class="page-login--options"
-              flex="main:justify cross:center">
+            <p class="page-login--options"
+               flex="main:justify cross:center">
               <!-- <span><d2-icon name="question-circle"/> 忘记密码</span>
               <span>注册用户</span> -->
             </p>
             <!-- 快速登录按钮 -->
-            <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
+            <el-button class="page-login--quick"
+                       size="default"
+                       type="info"
+                       @click="dialogVisible = true">
               快速选择用户（方便测试用）
             </el-button>
           </div>
@@ -74,14 +88,17 @@
         </div>
       </div>
     </div>
-    <el-dialog
-      title="快速选择用户"
-      :visible.sync="dialogVisible"
-      width="400px">
-      <el-row :gutter="10" style="margin: -20px 0px -10px 0px;">
-        <el-col v-for="(user, index) in users" :key="index" :span="12">
-          <div class="page-login--quick-user" @click="handleUserBtnClick(user)">
-            <d2-icon name="user-circle-o"/>
+    <el-dialog title="快速选择用户"
+               :visible.sync="dialogVisible"
+               width="400px">
+      <el-row :gutter="10"
+              style="margin: -20px 0px -10px 0px;">
+        <el-col v-for="(user, index) in users"
+                :key="index"
+                :span="12">
+          <div class="page-login--quick-user"
+               @click="handleUserBtnClick(user)">
+            <d2-icon name="user-circle-o" />
             <span>{{user.name}}</span>
           </div>
         </el-col>
@@ -171,6 +188,7 @@ export default {
             password: this.formLogin.password
           })
             .then(() => {
+              this.$store.dispatch('d2admin/page/closeAll')
               // 重定向对象不存在则返回顶层路径
               this.$router.replace(this.$route.query.redirect || '/')
             })
