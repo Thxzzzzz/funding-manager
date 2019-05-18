@@ -21,6 +21,36 @@ const frameIn = [
         },
         component: _import('system/index')
       },
+      ///   审核员相关    //
+      {
+        path: 'verify/product',
+        name: 'product-verify',
+        meta: {
+          title: '产品审核',
+          auth: true
+        },
+        component: _import('auditor/verify/product')
+      },
+      {
+        path: 'verify/product-detail',
+        name: 'product-detail',
+        meta: {
+          title: '产品详情',
+          auth: true
+        },
+        component: _import('auditor/verify/product-detail')
+      },
+      {
+        path: 'verify/license',
+        name: 'license-verify',
+        meta: {
+          title: '执照审核',
+          auth: true
+        },
+        component: _import('auditor/verify/license')
+      },
+
+      ///  End 审核员相关   ///
       // 演示页面
       {
         path: 'page1',
@@ -78,29 +108,6 @@ const frameIn = [
 ]
 
 /**
- * 管理员路由
- */
-
-const adminFrameIn = [
-  {
-    path: '/',
-    redirect: { name: 'index' },
-    component: layoutHeaderAside,
-    children: [
-      {
-        path: 'page3',
-        name: 'page3',
-        meta: {
-          title: '测试管理员页面',
-          auth: true
-        },
-        component: _import('demo/page3')
-      }
-    ]
-  }
-]
-
-/**
  * 在主框架之外显示
  */
 const frameOut = [
@@ -125,7 +132,6 @@ const errorPage = [
 
 // 导出需要显示菜单的
 export const frameInRoutes = frameIn
-export const adminRoutes = adminFrameIn
 
 // 重新组织后导出
 export default [

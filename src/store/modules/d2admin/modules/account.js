@@ -1,7 +1,13 @@
-import { Message, MessageBox } from 'element-ui'
+import {
+  Message,
+  MessageBox
+} from 'element-ui'
 import util from '@/libs/util.js'
 import router from '@/router'
-import { Login, Logout } from '@api/user'
+import {
+  Login,
+  Logout
+} from '@api/user'
 // import { adminRoutes } from '@/router/routes'
 // import store from '@/store/index'
 
@@ -15,7 +21,9 @@ export default {
      * @param {Object} param password {String} 密码
      * @param {Object} param route {Object} 登录成功后定向的路由对象 任何 vue-router 支持的格式
      */
-    login ({ dispatch }, {
+    login ({
+      dispatch
+    }, {
       username = '',
       password = ''
     } = {}) {
@@ -35,7 +43,11 @@ export default {
             // }
             // 设置 vuex 用户信息
             res.name = res.nickname
-            await dispatch('d2admin/user/set', { name: res.nickname }, { root: true })
+            await dispatch('d2admin/user/set', {
+              name: res.nickname
+            }, {
+              root: true
+            })
             // 用户登录后从持久化数据加载一系列的设置
             await dispatch('load')
             // 结束
@@ -52,7 +64,12 @@ export default {
      * @param {Object} param context
      * @param {Object} param confirm {Boolean} 是否需要确认
      */
-    logout ({ commit, dispatch }, { confirm = false } = {}) {
+    logout ({
+      commit,
+      dispatch
+    }, {
+      confirm = false
+    } = {}) {
       /**
        * @description 注销
        */
@@ -66,7 +83,9 @@ export default {
           console.log('err: ', err)
         })
         // 清空 vuex 用户信息
-        await dispatch('d2admin/user/set', {}, { root: true })
+        await dispatch('d2admin/user/set', {}, {
+          root: true
+        })
         // 跳转路由
         router.push({
           name: 'login'
@@ -74,18 +93,24 @@ export default {
       }
       // 判断是否需要确认
       if (confirm) {
-        commit('d2admin/gray/set', true, { root: true })
+        commit('d2admin/gray/set', true, {
+          root: true
+        })
         MessageBox.confirm('注销当前账户吗?  打开的标签页和用户设置将会被保存。', '确认操作', {
           confirmButtonText: '确定注销',
           cancelButtonText: '放弃',
           type: 'warning'
         })
           .then(() => {
-            commit('d2admin/gray/set', false, { root: true })
+            commit('d2admin/gray/set', false, {
+              root: true
+            })
             logout()
           })
           .catch(() => {
-            commit('d2admin/gray/set', false, { root: true })
+            commit('d2admin/gray/set', false, {
+              root: true
+            })
             Message({
               message: '放弃注销用户'
             })
@@ -99,20 +124,30 @@ export default {
      * @description 用户登录后从持久化数据加载一系列的设置
      * @param {Object} state vuex state
      */
-    load ({ dispatch }) {
+    load ({
+      dispatch
+    }) {
       return new Promise(async resolve => {
         // DB -> store 加载用户名
-        await dispatch('d2admin/user/load', null, { root: true })
+        await dispatch('d2admin/user/load', null, {
+          root: true
+        })
         // DB -> store 加载主题
-        await dispatch('d2admin/theme/load', null, { root: true })
+        await dispatch('d2admin/theme/load', null, {
+          root: true
+        })
         // DB -> store 加载页面过渡效果设置
-        await dispatch('d2admin/transition/load', null, { root: true })
-        // DB -> store 持久化数据加载上次退出时的多页列表
-        await dispatch('d2admin/page/openedLoad', null, { root: true })
-        // DB -> store 持久化数据加载侧边栏折叠状态
-        await dispatch('d2admin/menu/asideCollapseLoad', null, { root: true })
+        await dispatch('d2admin/transition/load', null, {
+          root: true
+        })
+        // // DB -> store 持久化数据加载上次退出时的多页列表
+        // await dispatch('d2admin/page/openedLoad', null, { root: true })
+        // // DB -> store 持久化数据加载侧边栏折叠状态
+        // await dispatch('d2admin/menu/asideCollapseLoad', null, { root: true })
         // DB -> store 持久化数据加载全局尺寸
-        await dispatch('d2admin/size/load', null, { root: true })
+        await dispatch('d2admin/size/load', null, {
+          root: true
+        })
         // end
         resolve()
       })

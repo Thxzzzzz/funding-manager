@@ -22,7 +22,12 @@ new Vue({
   store,
   i18n,
   render: h => h(App),
-
+  watch: {
+    // '$route.matched' (val) {
+    //   const _side = menuAside.filter(menu => menu.path === val[0].path)
+    //   this.$store.commit('d2admin/menu/asideSet', _side.length > 0 ? _side[0].children : [])
+    // }
+  },
   created () {
     // 处理路由 得到每一级的路由设置
     this.$store.commit('d2admin/page/init', frameInRoutes)

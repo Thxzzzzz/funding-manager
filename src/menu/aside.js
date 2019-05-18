@@ -34,10 +34,11 @@ export const managerAside = [
 export const auditorAside = [
   { path: '/index', title: '首页', icon: 'home' },
   {
-    title: '审核员菜单',
+    title: '信息审核',
     icon: 'folder-o',
     children: [
-      { path: '/page1', title: '审核员菜单' }
+      { path: '/verify/product', title: '产品审核' },
+      { path: '/verify/license', title: '执照审核' }
     ]
   }
 ]

@@ -1,11 +1,17 @@
 import cookies from './util.cookies'
 import db from './util.db'
 import log from './util.log'
+import dayjs from 'dayjs'
 
 const util = {
   cookies,
   db,
   log
+}
+
+util.formatDate = function (date) {
+  if (!date) return ''
+  return dayjs(date).format('YYYY年MM月DD日 HH:mm:ss') // 展示
 }
 
 /**
