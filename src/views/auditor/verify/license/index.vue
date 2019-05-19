@@ -3,7 +3,7 @@
     <div class="flitter">
       <el-select v-model="verifyStatusType"
                  @change="getVerifyLicenseList()"
-                 placeholder="请选择审核结果">
+                 placeholder="请选择审核状态">
         <el-option v-for="(item, index) in verifyOptions"
                    :key="index"
                    :value="item.key"
