@@ -39,3 +39,35 @@ export function Logout (data) {
     data
   })
 }
+
+/**
+ * 根据 role_id 来获取用户信息
+ * @param {*} data
+ */
+export function InfoByRoleId (data) {
+  return request({
+    url: 'manager/user/infoByRoleId',
+    method: 'get',
+    params: {
+      ...data
+    }
+  })
+}
+
+// 更新 User 信息
+export function UpdateUser (data) {
+  return request({
+    url: 'manager/user/updateUser',
+    method: 'post',
+    data
+  })
+}
+
+// 新建 User 信息
+export function NewUser (data) {
+  return request({
+    url: 'manager/user/newUser',
+    method: 'post',
+    data
+  })
+}
