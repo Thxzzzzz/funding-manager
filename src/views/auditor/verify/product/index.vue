@@ -14,7 +14,8 @@
       <div class="productItem"
            v-for="(item, index) in productList"
            :key="index">
-        <product-item :product="item"></product-item>
+        <product-item :product="item"
+                      @click.native="openProductDetail(item)"></product-item>
       </div>
     </div>
 
@@ -60,6 +61,15 @@ export default {
         this.productList = data.product_contents
       }).catch(error => {
         console.log(error)
+      })
+    },
+    openProductDetail (item) {
+    //   console.log('openProductDetail')
+      this.$router.push({
+        path: 'product-detail',
+        query: {
+          id: item.product_id
+        }
       })
     }
   },

@@ -1,7 +1,6 @@
 <template>
   <el-card class="card"
-           :body-style="{'padding':'10px'}"
-           @click.native="openLicenseDetail()">
+           :body-style="{'padding':'10px'}">
     <el-row class="item">
       <el-col :span="3">
         <img class="image"
@@ -50,14 +49,6 @@ export default {
     },
     formatDate (date) {
       return util.formatDate(date)
-    },
-    openLicenseDetail () {
-      this.$router.push({
-        path: 'license-detail',
-        query: {
-          id: this.license.id
-        }
-      })
     }
   }
 }

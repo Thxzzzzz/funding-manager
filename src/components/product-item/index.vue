@@ -1,7 +1,6 @@
 <template>
   <el-card class="card"
-           :body-style="{'padding':'10px'}"
-           @click.native="openProductDetail()">
+           :body-style="{'padding':'10px'}">
     <el-row class="item">
       <el-col :span="5">
         <img class="image"
@@ -49,15 +48,6 @@ export default {
     },
     formatDate (date) {
       return util.formatDate(date)
-    },
-    openProductDetail () {
-    //   console.log('openProductDetail')
-      this.$router.push({
-        path: 'product-detail',
-        query: {
-          id: this.product.product_id
-        }
-      })
     }
   }
 }

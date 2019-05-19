@@ -14,7 +14,8 @@
       <div class="licenseItem"
            v-for="(item, index) in licenseList"
            :key="index">
-        <license-item :license="item">
+        <license-item :license="item"
+                      @click.native="openLicenseDetail(item)">
         </license-item>
       </div>
     </div>
@@ -61,6 +62,14 @@ export default {
         this.licenseList = data
       }).catch(error => {
         console.log(error)
+      })
+    },
+    openLicenseDetail (item) {
+      this.$router.push({
+        path: 'license-detail',
+        query: {
+          id: item.id
+        }
       })
     }
   },
