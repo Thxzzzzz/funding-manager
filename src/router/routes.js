@@ -27,7 +27,7 @@ const frameIn = [{
       path: 'verify/product',
       name: 'product-verify',
       meta: {
-        title: '产品审核',
+        title: '众筹审核',
         auth: true
       },
       component: _import('auditor/verify/product')
@@ -36,7 +36,7 @@ const frameIn = [{
       path: 'verify/product-detail',
       name: 'product-detail',
       meta: {
-        title: '产品详情',
+        title: '众筹详情',
         auth: true
       },
       component: _import('auditor/verify/product-detail')
@@ -45,7 +45,7 @@ const frameIn = [{
       path: 'verify/license',
       name: 'license-verify',
       meta: {
-        title: '执照审核',
+        title: '资质审核',
         auth: true
       },
       component: _import('auditor/verify/license')
@@ -54,7 +54,7 @@ const frameIn = [{
       path: 'verify/license-detail',
       name: 'license-detail',
       meta: {
-        title: '执照详情',
+        title: '资质详情',
         auth: true
       },
       component: _import('auditor/verify/license-detail')
