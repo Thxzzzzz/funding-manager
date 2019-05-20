@@ -2,7 +2,7 @@ import request from '@/plugin/axios'
 
 export function Login (data) {
   return request({
-    url: 'manager/user/login',
+    url: 'v1/manager/user/login',
     method: 'post',
     data
   })
@@ -10,7 +10,7 @@ export function Login (data) {
 
 export function Info (data) {
   return request({
-    url: 'manager/user/info',
+    url: 'v1/manager/user/info',
     method: 'get',
     params: {
       ...data
@@ -34,7 +34,7 @@ export function GetUserById (data) {
 
 export function Logout (data) {
   return request({
-    url: 'manager/user/logout',
+    url: 'v1/manager/user/logout',
     method: 'post',
     data
   })
@@ -46,7 +46,7 @@ export function Logout (data) {
  */
 export function InfoByRoleId (data) {
   return request({
-    url: 'manager/user/infoByRoleId',
+    url: 'v1/manager/user/infoByRoleId',
     method: 'get',
     params: {
       ...data
@@ -57,7 +57,7 @@ export function InfoByRoleId (data) {
 // 更新 User 信息
 export function UpdateUser (data) {
   return request({
-    url: 'manager/user/updateUser',
+    url: 'v1/manager/user/updateUser',
     method: 'post',
     data
   })
@@ -66,7 +66,7 @@ export function UpdateUser (data) {
 // 新建 User 信息
 export function NewUser (data) {
   return request({
-    url: 'manager/user/newUser',
+    url: 'v1/manager/user/newUser',
     method: 'post',
     data
   })

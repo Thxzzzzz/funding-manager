@@ -6,7 +6,7 @@ import request from '@/plugin/axios'
  */
 export function GetProductList (data) {
   return request({
-    url: 'manager/product/getProductList',
+    url: 'v1/manager/product/getProductList',
     method: 'get',
     params: {
       ...data
@@ -20,7 +20,7 @@ export function GetProductList (data) {
  */
 export function ProductUpdate (data) {
   return request({
-    url: 'manager/product/update',
+    url: 'v1/manager/product/update',
     method: 'post',
     data
   })
@@ -31,7 +31,7 @@ export function ProductUpdate (data) {
  */
 export function productById (data) {
   return request({
-    url: 'manager/product/productById',
+    url: 'v1/manager/product/productById',
     method: 'get',
     params: {
       ...data
@@ -44,7 +44,7 @@ export function productById (data) {
  */
 export function pkgListByProductId (data) {
   return request({
-    url: 'manager/product/pkgListByProductId',
+    url: 'v1/manager/product/pkgListByProductId',
     method: 'get',
     params: {
       ...data

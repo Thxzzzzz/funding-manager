@@ -6,7 +6,7 @@ import request from '@/plugin/axios'
  */
 export function GetLicenseByVerifyStatus (data) {
   return request({
-    url: 'manager/license/getByVerifyStatus',
+    url: 'v1/manager/license/getByVerifyStatus',
     method: 'get',
     params: {
       ...data
@@ -19,7 +19,7 @@ export function GetLicenseByVerifyStatus (data) {
  */
 export function licenseById (data) {
   return request({
-    url: 'manager/license/licenseById',
+    url: 'v1/manager/license/licenseById',
     method: 'get',
     params: {
       ...data
@@ -33,7 +33,7 @@ export function licenseById (data) {
  */
 export function LicenseUpdate (data) {
   return request({
-    url: 'manager/license/update',
+    url: 'v1/manager/license/update',
     method: 'post',
     data
   })
