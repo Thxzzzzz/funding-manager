@@ -34,7 +34,7 @@
                 <el-form-item prop="username">
                   <el-input type="text"
                             v-model="formLogin.username"
-                            placeholder="用户名">
+                            placeholder="账号">
                     <i slot="prepend"
                        class="fa fa-user-circle-o"></i>
                   </el-input>
@@ -138,7 +138,7 @@ export default {
       // 校验
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          { required: true, message: '请输入账号', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }

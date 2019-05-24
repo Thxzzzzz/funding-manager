@@ -130,7 +130,7 @@ export default {
       dispatch
     }) {
       return new Promise(async resolve => {
-        // DB -> store 加载用户名
+        // DB -> store 加载账号
         await dispatch('d2admin/user/load', null, {
           root: true
         })

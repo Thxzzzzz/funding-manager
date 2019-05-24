@@ -15,15 +15,14 @@ export const managerAside = [{
   title: '数据库管理',
   icon: 'folder-o',
   children: [{
-    path: '/page1',
-    title: '管理员菜单'
+    path: '/admin/database/order',
+    title: '订单数据库'
   }]
 },
 {
   title: '审核员管理',
   icon: 'folder-o',
   path: '/admin/auditor-manager'
-
 }
 ]
 

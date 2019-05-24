@@ -61,7 +61,17 @@ const frameIn = [{
     },
 
     ///  End 审核员相关   ///
+
     ///  管理员相关     ///
+    {
+      path: 'admin/database/order',
+      name: 'database-order',
+      meta: {
+        title: '订单数据库',
+        auth: true
+      },
+      component: _import('admin/database/order')
+    },
     {
       path: 'admin/auditor-manager',
       name: 'auditor-manager',
@@ -73,6 +83,7 @@ const frameIn = [{
     },
 
     /// End 管理员相关  ///
+
     // 系统 前端日志
     {
       path: 'log',

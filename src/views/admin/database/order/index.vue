@@ -1,9 +1,9 @@
 <template>
   <d2-container>
-
     <d2-crud ref="d2Crud"
+             :options="options"
              :columns="columns"
-             :data="userList"
+             :data="orderList"
              :rowHandle="rowHandle"
              edit-title="我的修改"
              :edit-template="editTemplate"
@@ -15,49 +15,86 @@
              @row-add="handleRowAdd"
              @row-edit="handleRowEdit"
              @dialog-cancel="handleDialogCancel">
-      <el-button slot="header"
-                 type="primary"
-                 style="margin: 15px"
-                 @click="addRow">新增审核员</el-button>
     </d2-crud>
+    </div>
   </d2-container>
 </template>
 
 <script>
-import { InfoByRoleId, NewUser, UpdateUser } from '@api/user'
+import { OrderAll, OrderUpdate } from '@api/order'
 import util from '@/libs/util.js'
 
 export default {
-  name: 'auditor-manager',
+  name: 'database-order',
   data () {
     return {
+      // 表格设置
+      options: {
+        size: 'mini'
+      },
       // 信息列表
-      userList: [],
+      orderList: [],
       // 列定义
       columns: [
         {
-          title: 'ID',
+          title: '订单ID',
           key: 'id',
           sortable: true
         },
         {
-          title: '账号',
-          key: 'username',
+          title: '买家ID',
+          key: 'buyer_id',
           sortable: true
         },
         {
-          title: '昵称',
-          key: 'nickname',
+          title: '卖家ID',
+          key: 'seller_id',
           sortable: true
         },
         {
-          title: '邮箱',
-          key: 'email',
+          title: '收件人姓名',
+          key: 'name',
           sortable: true
         },
         {
-          title: '电话',
+          title: '收件人地址',
+          key: 'address',
+          sortable: true
+        },
+        {
+          title: '收件人电话',
           key: 'phone',
+          sortable: true
+        },
+        {
+          title: '产品ID',
+          key: 'product_id',
+          sortable: true
+        },
+        {
+          title: '套餐ID',
+          key: 'product_package_id',
+          sortable: true
+        },
+        {
+          title: '购买数量',
+          key: 'nums',
+          sortable: true
+        },
+        {
+          title: '单价',
+          key: 'unit_price',
+          sortable: true
+        },
+        {
+          title: '总价',
+          key: 'total_price',
+          sortable: true
+        },
+        // 订单状态，1:下单,2:付款,3:配货,4:出库,5:交易成功,6:退款,7:交易取消
+        {
+          title: '订单状态',
+          key: 'status',
           sortable: true
         },
         {
@@ -69,6 +106,12 @@ export default {
         {
           title: '修改时间',
           key: 'updated_at',
+          sortable: true,
+          formatter: this.formatDataTableValue
+        },
+        {
+          title: '删除时间',
+          key: 'deleted_at',
           sortable: true,
           formatter: this.formatDataTableValue
         }
@@ -163,7 +206,7 @@ export default {
       // 设置为审核员
       params.role_id = 1
       delete params.id
-      NewUser(params).then(data => {
+      OrderUpdate(params).then(data => {
         console.log(row)
         this.$message({
           message: '新增审核员成功',
@@ -186,7 +229,7 @@ export default {
       let params = row
       // 设置为审核员
       // params.role_id = 1
-      UpdateUser(params).then(data => {
+      OrderUpdate(params).then(data => {
         console.log(index)
         console.log(row)
         this.$message({
@@ -198,7 +241,7 @@ export default {
         this.formOptions.saveLoading = false
       }).catch(error => {
         this.$message({
-          message: '编辑审核员出错' + error,
+          message: '编辑出错' + error,
           type: 'warning'
         })
         this.formOptions.saveLoading = false
@@ -212,16 +255,15 @@ export default {
       })
       done()
     },
-    // 获取审核员列表
-    _getUserList () {
-      // role_id = 1 是审核员
-      InfoByRoleId({ role_id: 1 }).then(data => {
-        this.userList = data
+    // 获取订单列表
+    _getAllOrders () {
+      OrderAll().then(data => {
+        this.orderList = data
       })
     }
   },
   created () {
-    this._getUserList()
+    this._getAllOrders()
   }
 }
 </script>
