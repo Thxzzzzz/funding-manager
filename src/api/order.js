@@ -61,3 +61,17 @@ export function OrderAll (data) {
     }
   })
 }
+
+/**
+ * 获取被投诉的订单列表
+ * @param {*} data
+ */
+export function GetComplaintOrders (data) {
+  return request({
+    url: 'v1/manager/order/complaintOrders',
+    method: 'get',
+    params: {
+      ...data
+    }
+  })
+}

@@ -1,6 +1,5 @@
 <template>
   <d2-container>
-
     <d2-crud ref="d2Crud"
              :columns="columns"
              :data="userList"

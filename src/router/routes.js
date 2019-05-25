@@ -81,7 +81,15 @@ const frameIn = [{
       },
       component: _import('admin/auditor-manager')
     },
-
+    {
+      path: 'admin/complaint',
+      name: 'complaint',
+      meta: {
+        title: '用户投诉管理',
+        auth: true
+      },
+      component: _import('admin/complaint')
+    },
     /// End 管理员相关  ///
 
     // 系统 前端日志

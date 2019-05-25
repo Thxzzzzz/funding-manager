@@ -4,35 +4,20 @@
              :options="options"
              :columns="columns"
              :data="orderList"
-             :rowHandle="rowHandle"
-             @order-delete="orderDeleteClick"
-             @order-recover="orderRecoverClick"
+             :row-handle="rowHandle"
+             @order-stopfunding="stopFundingClick()"
              :form-options="formOptions">
     </d2-crud>
-    <el-dialog title="删除订单"
-               width="30%"
-               :visible.sync="delOrderDialogShow">
-      <p>订单号：{{seletedItem.id}}</p>
-      <p>买家ID：{{seletedItem.buyer_id}}</p>
-      <p>卖家ID：{{seletedItem.seller_id}}</p>
-      <p>产品ID：{{seletedItem.product_id}}</p>
-      <p>确认要删除该订单吗？</p>
-      <span slot="footer"
-            class="dialog-footer">
-        <el-button @click="delOrderDialogShow = false">取 消</el-button>
-        <el-button type="primary"
-                   @click="_orderDelete(seletedIndex, seletedItem)">确 定</el-button>
-      </span>
-    </el-dialog>
+
   </d2-container>
 </template>
 
 <script>
-import { OrderAll, OrderDelete, OrderRecover } from '@api/order'
+import { GetComplaintOrders } from '@api/order'
 import util from '@/libs/util.js'
 
 export default {
-  name: 'database-order',
+  name: 'complaint',
   data () {
     return {
       // 确认删除对话框是否显示
@@ -56,7 +41,7 @@ export default {
       columns: [
         {
           title: '订单ID',
-          key: 'id',
+          key: 'order_id',
           sortable: true
         },
         {
@@ -69,24 +54,29 @@ export default {
           key: 'seller_id',
           sortable: true
         },
-        {
-          title: '收件人姓名',
-          key: 'name',
-          sortable: true
-        },
+        // {
+        //   title: '收件人姓名',
+        //   key: 'name',
+        //   sortable: true
+        // },
         // {
         //   title: '收件人地址',
         //   key: 'address',
         //   sortable: true
         // },
-        {
-          title: '收件人电话',
-          key: 'phone',
-          sortable: true
-        },
+        // {
+        //   title: '收件人电话',
+        //   key: 'phone',
+        //   sortable: true
+        // },
         {
           title: '产品ID',
           key: 'product_id',
+          sortable: true
+        },
+        {
+          title: '产品名',
+          key: 'product_name',
           sortable: true
         },
         {
@@ -112,10 +102,15 @@ export default {
         // 订单状态，1:下单,2:付款,3:配货,4:出库,5:交易成功,6:退款,7:交易取消
         {
           title: '订单状态',
-          key: 'status',
+          key: 'order_status',
           sortable: true,
           formatter: this.orderStatusFormat
         },
+        {
+          title: '投诉原因',
+          key: 'complaint_reason',
+          sortable: true
+        }
         // {
         //   title: '创建时间',
         //   key: 'created_at',
@@ -128,52 +123,17 @@ export default {
         //   sortable: true,
         //   formatter: this.formatDataTableValue
         // },
-        {
-          title: '删除时间',
-          key: 'deleted_at',
-          sortable: true,
-          formatter: (row, column, cellValue, index) => {
-            if (cellValue === null) return '未删除'
-            return util.formatDate(cellValue)
-          },
-          filters: [
-            { text: '未删除', value: true },
-            { text: '已删除', value: false }
-          ],
-          filterMethod (value, row) {
-            if (value) {
-              // null 的是未删除
-              return row.deleted_at === null
-            }
-            // 非 null 是已删除
-            return row.deleted_at !== null
-          }
-        }
       ],
-
       rowHandle: {
         custom: [
           {
-            text: '删除',
+            text: '暂停该众筹',
             type: 'danger',
             size: 'small',
-            emit: 'order-delete',
-            show: (index, row) => {
-              return row.deleted_at === null
-            }
-          },
-          {
-            text: '恢复',
-            type: 'warning',
-            size: 'small',
-            emit: 'order-recover',
-            show: (index, row) => {
-              return row.deleted_at !== null
-            }
+            emit: 'order-stopfunding'
           }
         ]
       },
-
       formOptions: {
         labelWidth: '80px',
         labelPosition: 'left',
@@ -212,6 +172,12 @@ export default {
       }
       return '状态异常'
     },
+    stopFundingClick (index, row) {
+      this.$message({
+        message: '该功能暂未开放',
+        type: 'warning'
+      })
+    },
     // 打开了对话框
     handleDialogOpen ({ mode, row }) {
       // this.$message({
@@ -219,57 +185,10 @@ export default {
       //   type: 'success'
       // })
     },
-    // 点击删除
-    orderDeleteClick ({ index, row }) {
-      console.log(index)
-      console.log(row)
-      this.seletedIndex = index
-      this.seletedItem = row
-      this.delOrderDialogShow = true
-    },
-    // 点击恢复
-    orderRecoverClick ({ index, row }) {
-      console.log(index)
-      console.log(row)
-      this.seletedIndex = index
-      this.seletedItem = row
-      this._orderRecover(this.seletedIndex, this.seletedItem)
-    },
-    // 删除订单
-    _orderDelete (index, item) {
-      let params = {
-        id: item.id
-      }
-      OrderDelete(params).then(data => {
-        this.$message({
-          message: '删除成功',
-          type: 'success'
-        })
-        this.$refs.d2Crud.updateCell(index, 'deleted_at', new Date())
-        this.delOrderDialogShow = false
-      }).catch(error => {
-        this.$message({
-          message: '删除出错' + error,
-          type: 'warning'
-        })
-      })
-    },
-    // 恢复订单
-    _orderRecover (index, item) {
-      let params = {
-        id: item.id
-      }
-      OrderRecover(params).then(data => {
-        this.$message({
-          message: '恢复成功',
-          type: 'success'
-        })
-        this.$refs.d2Crud.updateCell(index, 'deleted_at', null)
-      })
-    },
+
     // 获取订单列表
     _getAllOrders () {
-      OrderAll().then(data => {
+      GetComplaintOrders().then(data => {
         this.orderList = data
       })
     }
