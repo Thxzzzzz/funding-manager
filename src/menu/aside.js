@@ -23,6 +23,11 @@ export const managerAside = [{
   title: '审核员管理',
   icon: 'folder-o',
   path: '/admin/auditor-manager'
+},
+{
+  title: '用户投诉管理',
+  icon: 'folder-o',
+  path: '/admin/complaint'
 }
 ]
 
