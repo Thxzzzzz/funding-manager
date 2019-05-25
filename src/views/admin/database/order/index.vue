@@ -5,35 +5,53 @@
              :columns="columns"
              :data="orderList"
              :rowHandle="rowHandle"
-             edit-title="我的修改"
-             :edit-template="editTemplate"
-             :edit-rules="editRules"
-             :add-template="addTemplate"
-             :add-rules="addRules"
-             :form-options="formOptions"
-             @dialog-open="handleDialogOpen"
-             @row-add="handleRowAdd"
-             @row-edit="handleRowEdit"
-             @dialog-cancel="handleDialogCancel">
+             @order-delete="orderDeleteClick"
+             @order-recover="orderRecoverClick"
+             :form-options="formOptions">
     </d2-crud>
-    </div>
+    <el-dialog title="删除订单"
+               width="30%"
+               :visible.sync="delOrderDialogShow">
+      <p>订单号：{{seletedItem.id}}</p>
+      <p>买家ID：{{seletedItem.buyer_id}}</p>
+      <p>卖家ID：{{seletedItem.seller_id}}</p>
+      <p>产品ID：{{seletedItem.product_id}}</p>
+      <p>确认要删除该订单吗？</p>
+      <span slot="footer"
+            class="dialog-footer">
+        <el-button @click="delOrderDialogShow = false">取 消</el-button>
+        <el-button type="primary"
+                   @click="_orderDelete(seletedIndex, seletedItem)">确 定</el-button>
+      </span>
+    </el-dialog>
   </d2-container>
 </template>
 
 <script>
-import { OrderAll, OrderUpdate } from '@api/order'
+import { OrderAll, OrderDelete, OrderRecover } from '@api/order'
 import util from '@/libs/util.js'
 
 export default {
   name: 'database-order',
   data () {
     return {
+      // 确认删除对话框是否显示
+      delOrderDialogShow: false,
       // 表格设置
       options: {
-        size: 'mini'
+        size: 'mini',
+        height: 800
       },
+      seletedItem: {},
+      seletedIndex: -1,
       // 信息列表
       orderList: [],
+      // // 分页信息
+      // pagination: {
+      //   currentPage: 1,
+      //   pageSize: 5,
+      //   total: 0
+      // },
       // 列定义
       columns: [
         {
@@ -56,11 +74,11 @@ export default {
           key: 'name',
           sortable: true
         },
-        {
-          title: '收件人地址',
-          key: 'address',
-          sortable: true
-        },
+        // {
+        //   title: '收件人地址',
+        //   key: 'address',
+        //   sortable: true
+        // },
         {
           title: '收件人电话',
           key: 'phone',
@@ -97,73 +115,62 @@ export default {
           key: 'status',
           sortable: true
         },
-        {
-          title: '创建时间',
-          key: 'created_at',
-          sortable: true,
-          formatter: this.formatDataTableValue
-        },
-        {
-          title: '修改时间',
-          key: 'updated_at',
-          sortable: true,
-          formatter: this.formatDataTableValue
-        },
+        // {
+        //   title: '创建时间',
+        //   key: 'created_at',
+        //   sortable: true,
+        //   formatter: this.formatDataTableValue
+        // },
+        // {
+        //   title: '修改时间',
+        //   key: 'updated_at',
+        //   sortable: true,
+        //   formatter: this.formatDataTableValue
+        // },
         {
           title: '删除时间',
           key: 'deleted_at',
           sortable: true,
-          formatter: this.formatDataTableValue
+          formatter: (row, column, cellValue, index) => {
+            if (cellValue === null) return '未删除'
+            return util.formatDate(cellValue)
+          },
+          filters: [
+            { text: '未删除', value: true },
+            { text: '已删除', value: false }
+          ],
+          filterMethod (value, row) {
+            if (value) {
+              // null 的是未删除
+              return row.deleted_at === null
+            }
+            // 非 null 是已删除
+            return row.deleted_at !== null
+          }
         }
       ],
-      // 表单校验
-      addRules: {
-        username: [ { required: true, message: '请输入账号', trigger: 'blur' } ],
-        nickname: [ { required: true, message: '请输入昵称', trigger: 'blur' } ],
-        password: [ { required: true, message: '请输入密码', trigger: 'blur' } ]
-      },
-      // 表单校验
-      editRules: {
-        username: [ { required: true, message: '请输入账号', trigger: 'blur' } ],
-        nickname: [ { required: true, message: '请输入昵称', trigger: 'blur' } ]
-      },
+
       rowHandle: {
-        columnHeader: '编辑表格',
-        edit: {
-          icon: 'el-icon-edit',
-          text: '点我进行编辑',
-          size: 'small'
-        }
-      },
-      // 添加对话框的表单格式
-      addTemplate: {
-        id: {
-          title: 'ID',
-          value: '',
-          component: {
-            disabled: true
+        custom: [
+          {
+            text: '删除',
+            type: 'danger',
+            size: 'small',
+            emit: 'order-delete',
+            show: (index, row) => {
+              return row.deleted_at === null
+            }
+          },
+          {
+            text: '恢复',
+            type: 'warning',
+            size: 'small',
+            emit: 'order-recover',
+            show: (index, row) => {
+              return row.deleted_at !== null
+            }
           }
-        },
-        username: {
-          title: '账号',
-          value: ''
-        },
-        nickname: {
-          title: '昵称',
-          value: ''
-        },
-        password: {
-          title: '密码',
-          value: ''
-        },
-        email: {
-          title: '邮箱',
-          value: ''
-        },
-        phone: {
-          title: '电话',
-          value: ''
-        }
+        ]
       },
 
       formOptions: {
@@ -186,6 +193,7 @@ export default {
     formatDataTableValue (row, column, cellValue, index) {
       return util.formatDate(cellValue)
     },
+
     // 打开了对话框
     handleDialogOpen ({ mode, row }) {
       // this.$message({
@@ -193,67 +201,53 @@ export default {
       //   type: 'success'
       // })
     },
-    // 普通的新增
-    addRow () {
-      this.$refs.d2Crud.showDialog({
-        mode: 'add'
-      })
+    // 点击删除
+    orderDeleteClick ({ index, row }) {
+      console.log(index)
+      console.log(row)
+      this.seletedIndex = index
+      this.seletedItem = row
+      this.delOrderDialogShow = true
     },
-    // 新增 新增审核员
-    handleRowAdd (row, done) {
-      this.formOptions.saveLoading = true
-      let params = row
-      // 设置为审核员
-      params.role_id = 1
-      delete params.id
-      OrderUpdate(params).then(data => {
-        console.log(row)
+    // 点击恢复
+    orderRecoverClick ({ index, row }) {
+      console.log(index)
+      console.log(row)
+      this.seletedIndex = index
+      this.seletedItem = row
+      this._orderRecover(this.seletedIndex, this.seletedItem)
+    },
+    // 删除订单
+    _orderDelete (index, item) {
+      let params = {
+        id: item.id
+      }
+      OrderDelete(params).then(data => {
         this.$message({
-          message: '新增审核员成功',
+          message: '删除成功',
           type: 'success'
         })
-        // done可以传入一个对象来修改提交的某个字段
-        done(data)
-        this.formOptions.saveLoading = false
+        this.$refs.d2Crud.updateCell(index, 'deleted_at', new Date())
+        this.delOrderDialogShow = false
       }).catch(error => {
         this.$message({
-          message: '新增审核员出错' + error,
+          message: '删除出错' + error,
           type: 'warning'
         })
-        this.formOptions.saveLoading = false
       })
     },
-    // 表格编辑 更新信息
-    handleRowEdit ({ index, row }, done) {
-      this.formOptions.saveLoading = true
-      let params = row
-      // 设置为审核员
-      // params.role_id = 1
-      OrderUpdate(params).then(data => {
-        console.log(index)
-        console.log(row)
+    // 恢复订单
+    _orderRecover (index, item) {
+      let params = {
+        id: item.id
+      }
+      OrderRecover(params).then(data => {
         this.$message({
-          message: '编辑成功',
+          message: '恢复成功',
           type: 'success'
         })
-        // done可以传入一个对象来修改提交的某个字段
-        done(data)
-        this.formOptions.saveLoading = false
-      }).catch(error => {
-        this.$message({
-          message: '编辑出错' + error,
-          type: 'warning'
-        })
-        this.formOptions.saveLoading = false
+        this.$refs.d2Crud.updateCell(index, 'deleted_at', null)
       })
-    },
-    // 取消编辑
-    handleDialogCancel (done) {
-      this.$message({
-        message: '取消编辑',
-        type: 'warning'
-      })
-      done()
     },
     // 获取订单列表
     _getAllOrders () {

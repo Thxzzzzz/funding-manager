@@ -11,10 +11,18 @@ import util from '@/libs/util.js'
 
 // 路由数据
 import routes from './routes'
-import { Info } from '@api/user'
+import {
+  Info
+} from '@api/user'
 // import { adminRoutes } from '@/router/routes'
-import { managerHeader, auditorHeader } from '@/menu/header'
-import { managerAside, auditorAside } from '@/menu/aside'
+import {
+  managerHeader,
+  auditorHeader
+} from '@/menu/header'
+import {
+  managerAside,
+  auditorAside
+} from '@/menu/aside'
 
 Vue.use(VueRouter)
 
@@ -40,8 +48,9 @@ router.beforeEach((to, from, next) => {
     Info()
       .then(async res => {
         res.name = res.nickname
-        await store.dispatch('d2admin/user/set', res, { root: true })
-
+        await store.dispatch('d2admin/user/set', res, {
+          root: true
+        })
         if (res.role_id === 999) {
           // 设置顶栏菜单
           store.commit('d2admin/menu/headerSet', managerHeader)
