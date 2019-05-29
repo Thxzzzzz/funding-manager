@@ -75,9 +75,9 @@ export default {
           sortable: true
         },
         // {
-        //   title: '收件人地址',
-        //   key: 'address',
-        //   sortable: true
+        //  title: '收件人地址',
+        //  key: 'address',
+        //  sortable: true
         // },
         {
           title: '收件人电话',
@@ -94,16 +94,16 @@ export default {
           key: 'product_package_id',
           sortable: true
         },
-        {
-          title: '购买数量',
-          key: 'nums',
-          sortable: true
-        },
-        {
-          title: '单价',
-          key: 'unit_price',
-          sortable: true
-        },
+        //  {
+        //    title: '购买数量',
+        //    key: 'nums',
+        //    sortable: true
+        //   },
+        //  {
+        //  title: '单价',
+        //  key: 'unit_price',
+        //  sortable: true
+        //  },
         {
           title: '总价',
           key: 'total_price',

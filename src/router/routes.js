@@ -85,7 +85,7 @@ const frameIn = [{
       path: 'admin/complaint',
       name: 'complaint',
       meta: {
-        title: '用户投诉管理',
+        title: '订单投诉情况',
         auth: true
       },
       component: _import('admin/complaint')

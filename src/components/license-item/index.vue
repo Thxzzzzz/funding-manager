@@ -22,7 +22,7 @@
           <span class="infoText">{{getStatusStr(license.verify_status)}}</span>
         </div>
         <div class="textDiv">
-          <span class="hintText">修改时间:</span>
+          <span class="hintText">更新时间:</span>
           <span class="infoText">{{formatDate(license.updated_at)}}</span>
         </div>
       </el-col>

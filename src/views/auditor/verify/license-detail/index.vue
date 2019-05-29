@@ -12,7 +12,7 @@
       <div class="editZone"
            v-if="step === 1">
         <div class="textDiv">
-          <span class="hintText">用户&nbsp;&nbsp; ID:</span>
+          <span class="hintText">用&nbsp;户&nbsp; ID:</span>
           <span class="infoText">{{userInfo.id}}</span>
         </div>
         <div class="textDiv">
@@ -36,8 +36,14 @@
           <span class="infoText">{{userInfo.phone}}</span>
         </div>
         <div class="textDiv">
-          <span class="hintText">修改时间:</span>
-          <span class="infoText">{{userInfo.updated_at}}</span>
+          <span class="hintText">创建申请时间:</span>
+          <span class="infoText"
+                        v-text="formatDate(license.created_at)"></span>
+        </div>
+        <div class="textDiv">
+          <span class="hintText">执照更新时间:</span>
+          <span class="infoText"
+                        v-text="formatDate(license.updated_at)"></span>
         </div>
 
       </div>

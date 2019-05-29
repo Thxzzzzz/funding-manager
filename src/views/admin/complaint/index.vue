@@ -109,6 +109,7 @@ export default {
         {
           title: '投诉原因',
           key: 'complaint_reason',
+          width: '200',
           sortable: true
         }
         // {
@@ -124,16 +125,6 @@ export default {
         //   formatter: this.formatDataTableValue
         // },
       ],
-      rowHandle: {
-        custom: [
-          {
-            text: '暂停该众筹',
-            type: 'danger',
-            size: 'small',
-            emit: 'order-stopfunding'
-          }
-        ]
-      },
       formOptions: {
         labelWidth: '80px',
         labelPosition: 'left',
@@ -171,12 +162,6 @@ export default {
         return '交易关闭'
       }
       return '状态异常'
-    },
-    stopFundingClick (index, row) {
-      this.$message({
-        message: '该功能暂未开放',
-        type: 'warning'
-      })
     },
     // 打开了对话框
     handleDialogOpen ({ mode, row }) {

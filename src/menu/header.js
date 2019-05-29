@@ -25,7 +25,7 @@ export const managerHeader = [{
   path: '/admin/auditor-manager'
 },
 {
-  title: '用户投诉管理',
+  title: '订单投诉情况',
   icon: 'folder-o',
   path: '/admin/complaint'
 }
