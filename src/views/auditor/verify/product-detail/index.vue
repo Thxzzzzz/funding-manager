@@ -3,7 +3,7 @@
     <div class="content">
       <el-steps :active="step"
                 align-center>
-        <el-step title="产品信息"></el-step>
+        <el-step title="基本信息"></el-step>
         <el-step title="产品详情"></el-step>
         <el-step title="套餐信息"></el-step>
         <el-step title="审核结果"></el-step>
@@ -12,6 +12,14 @@
       <!-- 产品信息 -->
       <div class="editZone"
            v-if="step === 1">
+        <!--<div class="textDiv">
+         <span class="hintText">发起者&nbsp;ID:</span>
+          <span class="infoText">{{userInfo.id}}</span>
+        </div>-->
+        <div class="textDiv">
+          <span class="hintText">发&nbsp; 起 &nbsp;者:</span>
+          <span class="infoText">{{userInfo.nickname}}</span>
+        </div>
         <div class="textDiv">
           <span class="hintText">产品&nbsp;&nbsp; ID:</span>
           <span class="infoText">{{product.id}}</span>
@@ -24,10 +32,6 @@
           <span class="hintText">产品类型:</span>
           <span class="infoText">{{typeStr(product.product_type)}}</span>
         </div>
-        <!-- <div class="textDiv">
-          <span class="hintText">审核状态:</span>
-          <span class="infoText">{{getStatusStr(product.verify_status)}}</span>
-        </div> -->
         <div class="textDiv">
           <span class="hintText">目标金额:</span>
           <span class="infoText">{{product.target_price}}</span>
@@ -169,6 +173,7 @@
 
 <script>
 import { productById, pkgListByProductId, getProductTypeList, ProductUpdate } from '@api/product'
+import { GetUserById } from '@api/user'
 import VerifyStatusUtil from '@/libs/util.enums.js'
 import util from '@/libs/util.js'
 
@@ -179,6 +184,7 @@ export default {
       filename: __filename,
       product_id: -1,
       step: 1,
+      userInfo: {},
       product: {},
       product_packages: [],
       typeList: [],
@@ -272,6 +278,7 @@ export default {
       productById({ id: productId })
         .then(data => {
           this.product = data
+          this._getUserById(data.user_id)
         })
         .catch(error => {
           this.$message.error('获取产品信息出错' + error)
@@ -291,6 +298,13 @@ export default {
         this.typeList = data
       }).catch(error => {
         this.$message.error('获取产品类型信息出错' + error)
+      })
+    },
+    _getUserById (userId) {
+      GetUserById({ id: userId }).then(data => {
+        this.userInfo = data
+      }).catch(error => {
+        this.$message.error('获取商家信息出错' + error)
       })
     }
   },
