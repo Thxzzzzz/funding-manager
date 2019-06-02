@@ -15,7 +15,7 @@ module.exports = {
   publicPath, // 根据你的实际情况更改这里
   lintOnSave: true,
   devServer: {
-    port: 6666,
+    port: 7777,
     proxy: {
       '/v1': {
         target: 'http://127.0.0.1:8080',
