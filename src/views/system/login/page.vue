@@ -15,7 +15,7 @@
            flex="dir:top main:justify cross:center box:justify">
         <div class="page-login--content-header">
           <p class="page-login--content-header-motto">
-            1500310307 <span>韦谷叶</span>
+            Thxzzzzz <span>fundding</span>
           </p>
         </div>
         <div class="page-login--content-main"
@@ -83,7 +83,7 @@
           </p> -->
           <p class="page-login--content-footer-copyright">
             Copyright <d2-icon name="copyright"></d2-icon>
-            1500310307 韦谷叶
+            Thxzzzzz
           </p>
         </div>
       </div>
