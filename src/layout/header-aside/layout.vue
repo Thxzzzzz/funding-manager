@@ -103,7 +103,7 @@ import d2HeaderSearch from './components/header-search'
 import d2HeaderSize from './components/header-size'
 import d2HeaderTheme from './components/header-theme'
 import d2HeaderUser from './components/header-user'
-import d2HeaderLog from './components/header-log'
+// import d2HeaderLog from './components/header-log'
 import { mapState, mapGetters, mapActions } from 'vuex'
 import mixinSearch from './mixins/search'
 export default {
@@ -119,8 +119,8 @@ export default {
     d2HeaderSearch,
     d2HeaderSize,
     d2HeaderTheme,
-    d2HeaderUser,
-    d2HeaderLog
+    d2HeaderUser
+  //  d2HeaderLog
   },
   data () {
     return {
